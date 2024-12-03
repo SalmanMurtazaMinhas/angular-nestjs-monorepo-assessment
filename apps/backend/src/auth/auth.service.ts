@@ -1,31 +1,24 @@
 import { Injectable } from '@nestjs/common';
 import { AuthPayLoadDto } from './dto/auth.dto';
 import { JwtService } from '@nestjs/jwt';
-
-const fakeUsers = [
-    {
-        id: 1,
-        username: 'ali',
-        password: 'password123'
-    },
-
-    {
-        id: 2,
-        username: 'zainab',
-        password: 'password123'
-    },
-]
+import { User } from '../models/user.models';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import * as bcrypt from 'bcrypt';
 @Injectable()
 export class AuthService {
-
-    constructor(private jwtservice: JwtService) {
+    constructor(
+        @InjectModel(User.name)
+        private userModel: Model<User>,
+        private jwtservice: JwtService) {
 
     }
-    validateUser({ username, password }: AuthPayLoadDto) {
-        const findUser = fakeUsers.find((user) => user.username === username);
+    async validateUser({ username, password }: AuthPayLoadDto) {
+        const findUser = await this.userModel.findOne({ username });
         if (!findUser) return null;
-        if (password === findUser.password) {
-            const{ password, ...user} = findUser;
+        const isPasswordValid = await bcrypt.compare(password, findUser.password);
+        if (isPasswordValid) {
+            const { password, ...user } = findUser.toObject();
             return this.jwtservice.sign(user);
         }
     }
