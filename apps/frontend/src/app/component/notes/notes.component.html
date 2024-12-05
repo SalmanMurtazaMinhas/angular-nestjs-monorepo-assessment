@@ -1,0 +1,23 @@
+<div class="parent">
+<div class="content-container">
+    <form (submit)="addNote()">
+      <h3>Create a Note</h3>
+
+      <label for="title">Title</label>
+      <input id="title" [(ngModel)]="noteObj.title" name="title" placeholder="Enter note title" required />
+
+      <label for="content">Content</label>
+      <textarea id="content" [(ngModel)]="noteObj.content" name="content" placeholder="Enter note content"></textarea>
+
+      <button type="submit">Add Note</button>
+    </form>
+
+    <h3>My Notes</h3>
+    <ul class="note-list">
+      <li *ngFor="let note of notes" class="note-item">
+        <h1>{{ note.title }}</h1>
+        <p>{{ note.content }}</p>
+      </li>
+    </ul>
+  </div>
+</div>
