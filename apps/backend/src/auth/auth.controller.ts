@@ -12,7 +12,9 @@ export class AuthController {
     @Post('login')
     @UseGuards(LocalGuard)
     login(@Req() req: Request){
-        return req.user;
+        return { status:201,
+            accessToken: req.user 
+        };
     }
 
     @Get('status')

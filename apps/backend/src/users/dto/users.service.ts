@@ -20,4 +20,5 @@ export class UsersService {
         });
         return newUser.save()
     }
+
 }

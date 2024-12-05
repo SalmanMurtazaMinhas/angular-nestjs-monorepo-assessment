@@ -19,7 +19,12 @@ export class AuthService {
         const isPasswordValid = await bcrypt.compare(password, findUser.password);
         if (isPasswordValid) {
             const { password, ...user } = findUser.toObject();
-            return this.jwtservice.sign(user);
+            const token = this.jwtservice.sign(user, {
+                secret: 'a1a1a1', 
+                expiresIn: '8h'   
+            });
+    
+            return token; 
         }
     }
 }
