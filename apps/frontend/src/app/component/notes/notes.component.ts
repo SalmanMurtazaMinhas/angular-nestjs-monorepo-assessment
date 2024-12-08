@@ -34,7 +34,7 @@ export class NotesComponent implements OnInit {
 
   getNotes() {
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.token}`,  // Attach token to the Authorization header
+      'Authorization': `Bearer ${this.token}`, 
     });
 
     this.http.get('http://localhost:3000/notes', { headers }).subscribe((data: any) => {
