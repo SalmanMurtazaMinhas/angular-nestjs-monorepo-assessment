@@ -1,82 +1,114 @@
-# AssessmentMonorepo
+# Assessment Project: Full-Stack Notes App
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+## Project Overview
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is almost ready ✨.
+This project demonstrates a full-stack implementation of a Notes Management Application. It is built using the following technologies:
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/getting-started/tutorials/angular-monorepo-tutorial?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+- **Backend**: NestJS
+- **Frontend**: Angular
+- **Database**: MongoDB
+- **Authentication**: JWT (JSON Web Tokens)
+- **Monorepo**: Managed using Nx for efficient development.
 
-## Finish your CI setup
+The application provides features for user authentication (signup, login, logout) and basic CRUD operations for managing notes.
 
-[Click here to finish setting up your workspace!](https://cloud.nx.app/connect/6RI2zXqr8a)
+## Features
 
+1. **User Authentication**
 
-## Run tasks
+   - **Signup**: New users can register with a username and password.
+   - **Login**: Registered users can log in to access their notes.
+   - **Logout**: Users can log out, and their session will be invalidated.
 
-To run the dev server for your app, use:
+2. **Notes Management**
 
-```sh
-npx nx serve frontend
-```
+   - Create, view, and list personal notes.
+   - Only authenticated users can access and manage their notes.
 
-To create a production bundle:
+## Project Structure
 
-```sh
-npx nx build frontend
-```
+### Backend (NestJS)
 
-To see all available targets to run for a project, run:
+- **Controllers**: Handles HTTP requests (e.g., `auth.controller.ts`, `notes.controller.ts`).
+- **Services**: Encapsulates business logic (e.g., `auth.service.ts`, `notes.service.ts`).
+- **Modules**: Organizes the app into cohesive blocks (e.g., `AuthModule`, `NotesModule`).
+- **Database**: Uses Mongoose to interact with MongoDB.
+- **Authentication**: Implements JWT for secure authentication.
+- **Password Security**: Passwords are securely hashed using bcrypt before storage.
 
-```sh
-npx nx show project frontend
-```
+### Frontend (Angular)
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+- **Components**:
+  - `LoginComponent`: Handles user login.
+  - `SignupComponent`: Handles user registration.
+  - `NotesComponent`: Manages the creation and display of notes.
+  - `LayoutComponent`: Provides the navigation and layout structure.
+  - `DashboardComponent`: Serves as a placeholder for routing and future enhancements.
+- **Routing**: Configured using `app.routes.ts` for navigation.
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## How to Run
 
-## Add new projects
+### Prerequisites
 
-While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
+- Node.js (v16 or higher)
+- MongoDB instance running locally or on a server
 
-Use the plugin's generator to create new projects.
+### Setup
 
-To generate a new application, use:
+1. **Clone the Repository**
 
-```sh
-npx nx g @nx/angular:app demo
-```
+   ```bash
+   git clone [repository-url]
+   cd [repository-folder]
+   ```
 
-To generate a new library, use:
+2. **Install Dependencies**
 
-```sh
-npx nx g @nx/angular:lib mylib
-```
+   ```bash
+   npm install
+   ```
 
-You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
+3. **Run the Application**
 
-[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+   - Start MongoDB.
+   - From the parent folder, run the following commands in separate terminals:
+     ```bash
+     nx serve backend
+     ```
+     ```bash
+     nx serve frontend
+     ```
 
+4. **Access the App**
 
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+   - Frontend: Open [http://localhost:4200](http://localhost:4200)
+   - Backend: Open [http://localhost:3000](http://localhost:3000)
 
-## Install Nx Console
+## API Endpoints
 
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
+### Auth
 
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- **POST** `/signup`: Registers a new user.
+- **POST** `/login`: Authenticates a user and returns a JWT.
 
-## Useful links
+### Notes
 
-Learn more:
+- **GET** `/notes`: Retrieves a list of notes for the authenticated user.
+- **POST** `/createNote`: Creates a new note.
+- JWT tokens are required for all protected routes.
 
-- [Learn more about this workspace setup](https://nx.dev/getting-started/tutorials/angular-monorepo-tutorial?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## Demo Video
 
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+The walkthrough video for the application, highlighting its features and functionality, can be accessed here: [The Demo/walkthrough](https://drive.google.com/file/d/1rDrUy57yxAVxLz2jxZtqqUBxwtlA42eW/view?usp=drive_link).
+
+## Future Improvements
+
+- Implement NgRx for enhanced frontend state management.
+- Add validation messages on the frontend to assist users in signing up and signing in smoothly.
+- Implement update and delete functionalities for notes.
+- Enhance security by using environment-based configurations.
+
+---
+
+If you have any questions about the application, feel free to reach out!
+
